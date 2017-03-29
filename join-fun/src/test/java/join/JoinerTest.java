@@ -16,7 +16,9 @@ public class JoinerTest {
         RecordSet table2 = new RecordSet(2);
         table2.add(asList("John Smith", "+1 (123) 456 7890"));
 
-        RecordSet joinResult = Joiner.innerJoin(table1, 0, table2, 0);
+        // will join first by fields
+        Joiner joiner = new Joiner(0,  0);
+        RecordSet joinResult = joiner.innerJoin(table1, table2);
 
         assertEquals(3, joinResult.columnsNum());
         assertEquals(1, joinResult.size());
@@ -34,7 +36,8 @@ public class JoinerTest {
         table2.add(asList("Ilya Ivanov", "+7 (902) 111 2233"));
         table2.add(asList("John Smith", "+1 (800) 987 6543"));
 
-        RecordSet joinResult = Joiner.innerJoin(table1, 0, table2, 0);
+        Joiner joiner = new Joiner(0,  0);
+        RecordSet joinResult = joiner.innerJoin(table1, table2);
 
         assertEquals(3, joinResult.columnsNum());
         assertEquals(3, joinResult.size());
