@@ -122,7 +122,7 @@ public class JoinerTest {
         table1.createIndex(2, IndexType.TREE);
         table2.createIndex(2, IndexType.TREE);
 
-        System.out.println("Joining with hash index...");
+        System.out.println("Joining with tree index...");
         runJoinAndLogTime(table1, table2, joiner);
     }
 

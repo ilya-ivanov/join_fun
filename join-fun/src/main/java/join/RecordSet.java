@@ -32,12 +32,12 @@ public class RecordSet extends ArrayList<Record> {
 
         super.add(record);
 
-        addToIndex(record);
+        indexRecord(record);
 
         return true;
     }
 
-    private void addToIndex(Record record) {
+    private void indexRecord(Record record) {
         for (int i = 0; i < indexes.length; i++) {
             if (indexes[i] != null) {
                 indexes[i].put(record.get(i), record);
@@ -53,11 +53,11 @@ public class RecordSet extends ArrayList<Record> {
         switch(type) {
             case TREE:
                 indexes[column] = TreeMultimap.<String, Record>create();
-                forEach(this::addToIndex);
+                forEach(this::indexRecord);
                 break;
             case HASH:
                 indexes[column] = HashMultimap.<String, Record>create();
-                forEach(this::addToIndex);
+                forEach(this::indexRecord);
                 break;
         }
     }
