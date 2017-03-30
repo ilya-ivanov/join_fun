@@ -29,13 +29,14 @@ public class Joiner {
         return result;
     }
 
-    private Stream<List<String>> innerJoin(List<String> leftRecord, RecordSet rightTable) {
-        return rightTable.stream()
-                .filter(rightRecord -> rightRecord.get(rightColumnIndex).equals(leftRecord.get(leftColumnIndex)))
+    private Stream<Record> innerJoin(Record leftRecord, RecordSet rightTable) {
+        String leftKeyValue = leftRecord.get(leftColumnIndex);
+
+        return rightTable.findRecordsByColumnValue(rightColumnIndex, leftKeyValue).stream()
                 .map(rightRecord -> merge(leftRecord, rightRecord));
     }
 
-    private List<String> merge(List<String> leftRec, List<String> rightRec) {
+    private Record merge(Record leftRec, Record rightRec) {
         // do not include foreign key
         List<String> rightCopy = new ArrayList<>(rightRec);
         rightCopy.remove(rightColumnIndex);
@@ -44,7 +45,7 @@ public class Joiner {
         result.addAll(leftRec);
         result.addAll(rightCopy);
 
-        return result;
+        return new Record(result);
     }
 
 }
